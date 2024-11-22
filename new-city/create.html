@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Cityscape Grid with Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+        }
+        #grid-container {
+            display: grid;
+            grid-template-columns: repeat(10, 50px);
+            grid-template-rows: repeat(10, 50px);
+            gap: 2px;
+            background-color: #5cb85c;
+            padding: 5px;
+            border: 2px solid #4cae4c;
+            position: relative;
+        }
+        .grid-cell {
+            width: 50px;
+            height: 50px;
+            background-color: #b3e6b3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #4cae4c;
+            position: relative; 
+        }
+        .grid-cell img {
+            position: absolute;
+            cursor: pointer; 
+        }
+        .toolbar {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: white;
+            border: 2px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toolbar img, .toolbar .icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .calculator-container {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+        }
+        .calculator-container h1 {
+            font-size: 1.2em;
+            margin-top: 0;
+        }
+        label {
+            font-weight: bold;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="grid-container">
+    
+</div>
+
+<div class="toolbar">
+    <img id="add-factory" src="https://img.icons8.com/color/48/000000/factory.png" alt="Factory" draggable="true" ondragstart="drag(event)" data-type="factory">
+    <img id="add-building" src="https://img.icons8.com/color/48/000000/building.png" alt="Building" draggable="true" ondragstart="drag(event)" data-type="building">
+    <img id="add-tree" src="https://img.icons8.com/?size=100&id=65474&format=png&color=000000" alt="Tree" draggable="true" ondragstart="drag(event)" data-type="tree">
+    <img id="add-park" src="https://img.icons8.com/?size=100&id=17607&format=png&color=000000" alt="Park" draggable="true" ondragstart="drag(event)" data-type="park">
+    <img id="add-road" src="https://img.icons8.com/color/48/000000/road.png" alt="Road" draggable="true" ondragstart="drag(event)" data-type="road">
+    <img id="add-solar-panel" src="https://img.icons8.com/color/48/000000/solar-panel.png" alt="Solar Panel" draggable="true" ondragstart="drag(event)" data-type="solar-panel">
+    <img id="add-windmill" src="https://img.icons8.com/color/48/000000/windmill.png" alt="Windmill" draggable="true" ondragstart="drag(event)" data-type="windmill">
+</div>
+
+<div class="calculator-container">
+    <h1>Carbon Footprint Calculator</h1>
+    <div class="input-group">
+        <label for="factories">Number of Factories:</label>
+        <input type="number" id="factories" value="0" readonly>
+    </div>
+    <div class="input-group">
+        <label for="parks">Number of Parks:</label>
+        <input type="number" id="parks" value="0" readonly>
+    </div>
+    <div class="input-group">
+        <label for="trees">Number of Trees:</label>
+        <input type="number" id="trees" value="0" readonly>
+    </div>
+    <div class="input-group">
+        <label for="buildings">Number of Buildings:</label>
+        <input type="number" id="buildings" value="0" readonly>
+    </div>
+    <div class="input-group">
+        <label for="solar-panels">Number of Solar Panels:</label>
+        <input type="number" id="solar-panels" value="0" readonly>
+    </div>
+    <div class="input-group">
+        <label for="windmills">Number of Windmills:</label>
+        <input type="number" id="windmills" value="0" readonly>
+    </div>
+    <div id="result">Total Carbon Footprint: 0 units</div>
+</div>
+
+<script>
+    const gridContainer = document.getElementById('grid-container');
+    const cellCount = 10 * 10;
+
+    for (let i = 0; i < cellCount; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'grid-cell';
+        cell.ondragover = allowDrop;
+        cell.ondrop = drop;
+        gridContainer.appendChild(cell);
+    }
+
+    let counts = {
+        factory: 0,
+        building: 0,
+        tree: 0,
+        park: 0,
+        solarPanel: 0,
+        windmill: 0
+    };
+
+ 
+    function updateCalculator() {
+        document.getElementById('factories').value = counts.factory;
+        document.getElementById('parks').value = counts.park;
+        document.getElementById('trees').value = counts.tree;
+        document.getElementById('buildings').value = counts.building;
+        document.getElementById('solar-panels').value = counts.solarPanel;
+        document.getElementById('windmills').value = counts.windmill;
+        calculateFootprint();
+    }
+
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drag(event) {
+        event.dataTransfer.setData("type", event.target.getAttribute("data-type"));
+        event.dataTransfer.setData("src", event.target.src); 
+    }
+
+    function drop(event) {
+        event.preventDefault();
+        const type = event.dataTransfer.getData("type");
+        const src = event.dataTransfer.getData("src");
+
+        const cell = event.target;
+        if (cell.className === 'grid-cell' && cell.children.length === 0) {
+            const img = document.createElement('img');
+            img.src = src || '';
+            img.className = type;
+            img.style.width = "40px"; 
+            img.style.height = "40px";
+            img.onclick = removeIcon; 
+            cell.appendChild(img);
+
+           
+            if (counts.hasOwnProperty(type)) {
+                counts[type]++;
+                updateCalculator();
+            }
+        }
+    }
+
+    
+    function removeIcon(event) {
+        const cell = event.target.parentElement;
+        const type = event.target.className;
+
+        cell.removeChild(event.target);
+
+    
+        if (counts.hasOwnProperty(type)) {
+            counts[type]--;
+            updateCalculator();
+        }
+    }
+
+    function calculateFootprint() {
+        let factories = counts.factory || 0;
+        let parks = counts.park || 0;
+        let trees = counts.tree || 0;
+        let buildings = counts.building || 0;
+        let solarPanels = counts.solarPanel || 0;
+        let windmills = counts.windmill || 0;
+
+        let carbonFootprint = 0;
+
+        carbonFootprint += factories * 50; 
+        carbonFootprint -= parks * 30;   
+        carbonFootprint -= trees * 10;   
+        carbonFootprint += buildings * 20; 
+        carbonFootprint -= solarPanels * 15; 
+        carbonFootprint -= windmills * 20; 
+
+        
+        carbonFootprint = Math.max(carbonFootprint, 0);
+
+        document.getElementById('result').innerText = `Total Carbon Footprint: ${carbonFootprint} units`;
+    }
+
+    updateCalculator();
+</script>
+
+</body>
+</html>

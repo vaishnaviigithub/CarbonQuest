@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Preview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #004d00; 
+            margin: 0;
+            padding: 20px;
+        }
+        .video-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .video-preview {
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            margin-bottom: 20px;
+        }
+        .redirect-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #000; 
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .redirect-button:hover {
+            background-color: #333;
+        }
+        .video-preview-container {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <div class="video-preview-container">
+            <iframe class="video-preview" src="https://www.youtube.com/embed/mp3kztZy7ow" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <a href="https://youtu.be/mp3kztZy7ow?si=wh3FANJZE9ljSDbF" class="redirect-button" target="_blank">Watch on YouTube</a>
+        </div>
+        <div class="video-preview-container">
+            <iframe class="video-preview" src="https://www.youtube.com/embed/8q7_aV8eLUE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <a href="https://youtu.be/8q7_aV8eLUE?feature=shared" class="redirect-button" target="_blank">Watch on YouTube</a>
+        </div>
+        <div class="video-preview-container">
+            <iframe class="video-preview" src="https://www.youtube.com/embed/rn9eUIbqCPU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <a href="https://youtu.be/rn9eUIbqCPU?feature=shared" class="redirect-button" target="_blank">Watch on YouTube</a>
+        </div>
+        <div class="video-preview-container">
+            <iframe class="video-preview" src="https://www.youtube.com/embed/u1a5aVymEQA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <a href="https://youtu.be/u1a5aVymEQA?si=JAt1z5kgz_4LBXV4" class="redirect-button" target="_blank">Watch on YouTube</a>
+        </div>
+        <div class="video-preview-container">
+            <iframe class="video-preview" src="https://www.youtube.com/embed/Dv2ps3bjGBw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <a href="https://youtu.be/Dv2ps3bjGBw?si=TpZs1QTeleXLSFfE" class="redirect-button" target="_blank">Watch on YouTube</a>
+        </div>
+    </div>
+</body>
+</html>

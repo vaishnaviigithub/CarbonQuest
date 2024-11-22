@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .profile-info h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .profile-info p {
+            margin: 5px 0;
+        }
+        .progress-container {
+            margin-top: 20px;
+        }
+        .progress-bar {
+            width: 100%;
+            background: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            height: 20px;
+        }
+        .progress-bar span {
+            display: block;
+            height: 100%;
+            background: #28a745;
+            width: 0%;
+            text-align: center;
+            color: white;
+            line-height: 20px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .progress-info {
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="../homepage/profile.jpeg" alt="Profile Photo" class="profile-photo" id="profilePhoto">
+            <div class="profile-info">
+                <h1 id="playerName">Jane Doe</h1>
+                <p><strong>Username:</strong> <span id="username">jane_doe</span></p>
+                <p><strong>Gender:</strong> <span id="gender">Female</span></p>
+                <p><strong>Date of Birth:</strong> <span id="dob">January 1, 1990</span></p>
+                <p><strong>Stars Earned:</strong> <span id="starsEarned">15</span></p>
+            </div>
+        </div>
+        <div class="progress-container">
+            <h2>Points to Next Star</h2>
+            <div class="progress-bar" id="progressBar">
+                <span id="progressFill">0%</span>
+            </div>
+            <div class="progress-info" id="progressInfo">You need <span id="pointsNeeded">0</span> more points to earn the next star.</div>
+        </div>
+    </div>
+
+    <script>
+        function updateProgressBar(currentPoints, pointsToNextStar) {
+            const progressFill = document.getElementById('progressFill');
+            const progressBar = document.getElementById('progressBar');
+            const progressInfo = document.getElementById('progressInfo');
+            
+            const percentage = Math.min(100, (currentPoints / pointsToNextStar) * 100);
+            progressFill.style.width = percentage + '%';
+            progressFill.textContent = Math.round(percentage) + '%';
+
+            progressInfo.innerHTML = `You need <span id="pointsNeeded">${pointsToNextStar - currentPoints}</span> more points to earn the next star.`;
+        }
+
+        // Example data
+        const currentPoints = 50;
+        const pointsToNextStar = 100;
+
+        updateProgressBar(currentPoints, pointsToNextStar);
+    </script>
+</body>
+</html>
